@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { InputField } from "../components/input/InputField";
 
 function Login() {
     const navigate = useNavigate();
+    const [FormData, setFormData] = useState({ email: '', password: '' });
     
     const login = (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
-        const email = formData.get('email');
-        const password = formData.get('password');
-        console.log(email, password);
+        console.log(FormData.email, FormData.password);
         navigate('/home');
     }
     return (
@@ -18,15 +18,25 @@ function Login() {
                     <img className="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
                     <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
                     
-                    <div className="form-floating">
-                        <input type="email" className="form-control" id="floatingInput" name="email" placeholder="name@example.com" />
-                        <label htmlFor="floatingInput">Email address</label>
-                    </div>
-                    <div className="form-floating">
-                        <input type="password" className="form-control" id="floatingPassword" name="password" placeholder="Password" />
-                        <label htmlFor="floatingPassword">Password</label>
-                    </div>
-                    
+                   <InputField 
+                   id="email"
+                   label="Email"
+                   type="email"
+                   placeholder="name@example.com"
+                   value={FormData.email}
+                   onChange={(e) => setFormData({...FormData, email: e.target.value})}
+                   />
+                   
+                    <InputField 
+                    id="password"
+                   label="Senha"
+                   type="password"
+                   placeholder="Password"
+                   value={FormData.password}
+                   onChange={(e) => setFormData({...FormData, password: e.target.value})}
+                   />
+
+                   
                     <div className="form-check text-start my-3">
                         <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" />
                         <label className="form-check-label" htmlFor="flexCheckDefault">
