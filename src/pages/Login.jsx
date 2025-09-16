@@ -6,6 +6,10 @@ function Login() {
     const navigate = useNavigate();
     const [FormData, setFormData] = useState({ email: '', password: '' });
     
+    const handle = (e) => {
+        setFormData({...FormData, [e.target.name]: e.target.value});
+    }
+    
     const login = (e) => {
         e.preventDefault();
         console.log(FormData.email, FormData.password);
@@ -20,20 +24,22 @@ function Login() {
                     
                    <InputField 
                    id="email"
+                   name="email"
                    label="Email"
                    type="email"
                    placeholder="name@example.com"
                    value={FormData.email}
-                   onChange={(e) => setFormData({...FormData, email: e.target.value})}
+                   onChange={handle}
                    />
                    
                     <InputField 
                     id="password"
+                    name="password"
                    label="Senha"
                    type="password"
                    placeholder="Password"
                    value={FormData.password}
-                   onChange={(e) => setFormData({...FormData, password: e.target.value})}
+                   onChange={handle}
                    />
 
                    

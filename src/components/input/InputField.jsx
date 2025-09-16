@@ -8,7 +8,7 @@ export const InputField = (props) => {
      type={props.type} 
      className="form-control" 
      id={props.id} 
-     name={props.id}
+     name={props.name}
      placeholder={props.placeholder}
      value={props.value}
      onChange={props.onChange} />
