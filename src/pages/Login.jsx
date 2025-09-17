@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { Form, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { InputField } from "../components/input/InputField";
 
@@ -7,14 +7,25 @@ function Login() {
     const [FormData, setFormData] = useState({ email: '', password: '' });
     
     const handle = (e) => {
+        console.log(`ID: ${e.target.id} - ${e.target.name}: ${e.target.value}`);
         setFormData({...FormData, [e.target.name]: e.target.value});
     }
     
     const login = (e) => {
         e.preventDefault();
-        console.log(FormData.email, FormData.password);
-        navigate('/home');
+        console.log(FormData);
+        
+        if (FormData.email === 'cdaniel8787@outlook.com' && FormData.password === 'admin') {
+            alert('Login efetuado com sucesso!')
+            navigate('/home');
+        } else {
+            alert('Login ou senha incorretos!')
+        }
     }
+
+
+
+
     return (
         <div className="d-flex align-items-center py-4 bg-body-tertiary" style={{minHeight: '100vh'}}>
             <main className="form-signin w-100 m-auto" style={{maxWidth: '330px'}}>
@@ -49,7 +60,7 @@ function Login() {
                             Remember me
                         </label>
                     </div>
-                    <button className="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+                    <button className="btn btn-success w-100 py-2" type="submit">Entrar</button>
                     <p className="mt-5 mb-3 text-body-secondary">© 2017–2025</p>
                 </form>
             </main>

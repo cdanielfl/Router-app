@@ -11,7 +11,9 @@ export const InputField = (props) => {
      name={props.name}
      placeholder={props.placeholder}
      value={props.value}
-     onChange={props.onChange} />
+     onChange={props.onChange} 
+     onBlur={props.onBlur}
+     />
      
      <label htmlFor={props.id}>
         {props.label}
