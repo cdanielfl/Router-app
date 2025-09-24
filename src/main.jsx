@@ -9,6 +9,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Cadastro from './pages/Cadastro.jsx'
 import { NotFound } from './pages/NotFound.jsx'
 import { Home } from './pages/Home.jsx'
+import Usuarios from './pages/Usuarios.jsx'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home />
+  },
+  {
+    path: "/usuarios",
+    element: <Usuarios />
   },
 
     ]

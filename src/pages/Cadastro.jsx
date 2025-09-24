@@ -1,24 +1,67 @@
 import { useState } from "react"
 import { InputField } from "../components/input/InputField"
+import { formatCep, formatPhone } from "../util/formatters"
 
 function Cadastro() {
-    const [formData, setFormData] = useState({ });
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        contact: '',
+        cep: '',
+        rua: '',
+        bairro: '',
+        cidade: '',
+        estado: ''
+    });
 
     const handle = async (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value});
+        let value = e.target.value;
+        console.log(`Campo: ${e.target.name} - Valor original: ${value}`);
+        
+        if (e.target.name === 'cep') {
+            value = formatCep(value);
+            console.log(`CEP formatado: ${value}`);
+        }
+        
+        if (e.target.name === 'contact') {
+            value = formatPhone(value);
+            console.log(`Telefone formatado: ${value}`);
+        }
+        
+        setFormData({...formData, [e.target.name]: value});
+        console.log('FormData atualizado:', {...formData, [e.target.name]: value});
     }
 
     const byCep = async (e) => {
-        e.preventDefault();
         console.log('Buscando CEP...');
-        const cep = e.target.value;
+        const cep = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
 
         if (cep.length === 8) {
             const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
             const data = await response.json();
             console.log('Dados Api:', data);
-            setFormData({...formData, rua: data.logradouro, bairro: data.bairro, cidade: data.localidade. data.estado});
+            
+            if (!data.erro) {
+                setFormData({
+                    ...formData, 
+                    rua: data.logradouro, 
+                    bairro: data.bairro, 
+                    cidade: data.localidade, 
+                    estado: data.uf
+                });
+            }
         }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log('Formulário enviado:', formData);
+        
+        const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+        usuarios.push(formData);
+        localStorage.setItem('usuarios', JSON.stringify(usuarios));
+        
+        alert('Cadastro realizado com sucesso!');
     }
 
     return (
@@ -29,7 +72,7 @@ function Cadastro() {
                 <h3>Cadastro</h3>
             </div>
         <div className="card-body">
-            <form className="row g-3 needs-validation" noValidate>
+            <form className="row g-3 needs-validation" noValidate onSubmit={handleSubmit}>
   <div className="col-md-6">
     <InputField 
       id="firstName"
